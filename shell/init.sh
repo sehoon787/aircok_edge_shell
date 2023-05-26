@@ -7,7 +7,7 @@ sudo apt-get update
 sudo apt-get upgrade -y
 
 # Install necessary packages
-sudo apt-get install -y net-tools jq sqlite3 openssh-server git
+sudo apt-get install -y net-tools jq sqlite3 openssh-server git curl
 
 # Allow SSH
 sudo ufw allow ssh
@@ -28,7 +28,7 @@ sudo apt-get install -y vlc libmpv-dev mpv
 # Add a cron job to run the script at system reboot
 (crontab -l 2>/dev/null; echo "@reboot /bin/bash ~/shell/start.sh") | crontab -
 # Add a cron job to request check update per 6 hours
-(crontab -l 2>/dev/null; echo "0 */6 * * * curl -o ~/version.json https://v3.aircok.com/web/edge/update") | crontab -
+(crontab -l 2>/dev/null; echo "0 */6 * * * curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')") | crontab -
 
 # Execute reboot script
 bash ~/shell/reboot.sh

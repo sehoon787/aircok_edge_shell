@@ -2,6 +2,9 @@
 
 set -e
 
+# Run ifconfig command and filter eth0 line
+mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
+
 # Versions JSON file path
 version_file=~/version.json
 
@@ -18,7 +21,13 @@ else
   sudo docker cp "${container_id}:/broker.db" ~/
   # Stop the Docker container
   sudo docker stop "${container_id}"
-  echo "✅ Successfully copied broker.db from 'aircok/aircok_edge_db:${db_version}'"
+
+  response=$(curl -X POST -H "Content-Type: application/json" -d "{\"db_version\": \"$db_version\"}" https://v3.aircok.com/web/edge/update?sn=$mac_address)
+  if [[ "$response" != *"success"* ]]; then
+      echo "⛔ Error: Request was not successful"
+  else
+    echo "✅ Successfully copied broker.db from 'aircok/aircok_edge_db:${db_version}'"
+  fi
 fi
 
 # Check Docker network
@@ -46,8 +55,15 @@ target_image="aircok/aircok_edge:${server_version}"
 # Check if the Docker image exists
 if ! sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "$target_image"; then
   sudo docker pull "${target_image}"
-  echo "✅ Downloaded '${target_image}' successfully."
+
+  response=$(curl -X POST -H "Content-Type: application/json" -d "{\"server_version\": \"$server_version\"}" https://v3.aircok.com/web/edge/update?sn=$mac_address)
+  if [[ "$response" != *"success"* ]]; then
+      echo "⛔ Error: Request was not successful"
+  else
+      echo "✅ Downloaded '${target_image}' successfully."
+  fi
 fi
+
 # Docker run
 sudo docker run -d \
   --platform=linux/$arch \
