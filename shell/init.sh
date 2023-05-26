@@ -27,6 +27,8 @@ sudo apt-get install -y vlc libmpv-dev mpv
 
 # Add a cron job to run the script at system reboot
 (crontab -l 2>/dev/null; echo "@reboot /bin/bash ~/shell/start.sh") | crontab -
+# Add a cron job to request check update per 6 hours
+(crontab -l 2>/dev/null; echo "0 */6 * * * curl -o ~/version.json https://v3.aircok.com/web/edge/update") | crontab -
 
 # Execute reboot script
 bash ~/shell/reboot.sh

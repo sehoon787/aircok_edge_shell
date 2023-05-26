@@ -35,7 +35,6 @@ for image_name in "${DOCKER_IMAGES[@]}"; do
 
             sudo docker pull "${image_name}"
             echo "✅ Downloaded '${image_name}' successfully."
-            sudo reboot
         fi
     else
         echo "Docker image '${image_name}' does not exist on Docker Hub."
@@ -48,10 +47,14 @@ cd ~/
 sudo git clone https://github.com/aircok/aircok_edge_shell.git
 
 new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/version.json)
+
 if [[ "$shell_version" == "$new_shell_version" ]]; then
   sudo rm -rf ~/aircok_edge_shell
 else
   sudo rm -rf ~/shell
   sudo cp -R ~/aircok_edge_shell/shell ~/
+  sudo rm -rf ~/aircok_edge_shell
   echo "✅ Update shell successfully."
 fi
+
+sudo reboot
