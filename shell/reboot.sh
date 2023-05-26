@@ -5,13 +5,14 @@ set -e
 # Read the versions from the JSON file
 version_file=~/version.json
 db_version=$(jq -r '.db_version' "$version_file")
-version=$(jq -r '.version' "$version_file")
+server_version=$(jq -r '.server_version' "$version_file")
 app_version=$(jq -r '.app_version' "$version_file")
+shell_version=$(jq -r '.shell_version' "$version_file")
 
 # Define a list of Docker image names
 DOCKER_IMAGES=(
   "aircok_edge_db${db_version}" 
-  "aircok_edge${version}" 
+  "aircok_edge${server_version}" 
   "aircok_edge_app${app_version}"
 )
 
@@ -33,7 +34,7 @@ for image_name in "${DOCKER_IMAGES[@]}"; do
             fi
 
             sudo docker pull "${image_name}"
-            echo "✅ Downloaded '${image_name}' successfully..."
+            echo "✅ Downloaded '${image_name}' successfully."
             sudo reboot
         fi
     else
@@ -41,3 +42,16 @@ for image_name in "${DOCKER_IMAGES[@]}"; do
         echo "⛔ Image not pulled."
     fi
 done
+
+# Compare new shell version with current shell version 
+cd ~/
+sudo git clone https://github.com/aircok/aircok_edge_shell.git
+
+new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/version.json)
+if [[ "$shell_version" == "$new_shell_version" ]]; then
+  sudo rm -rf ~/aircok_edge_shell
+else
+  sudo rm -rf ~/shell
+  sudo cp -R ~/aircok_edge_shell/shell ~/
+  echo "✅ Update shell successfully."
+fi

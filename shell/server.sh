@@ -40,8 +40,14 @@ sudo docker volume inspect logs
 
 # Check version
 arch=$(dpkg --print-architecture)
-version=$(jq -r '.version' "$version_file")
+server_version=$(jq -r '.version' "$version_file")
+target_image="aircok/aircok_edge:${server_version}"
 
+# Check if the Docker image exists
+if ! sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "$target_image"; then
+  sudo docker pull "${target_image}"
+  echo "✅ Downloaded '${target_image}' successfully."
+fi
 # Docker run
 sudo docker run -d \
   --platform=linux/$arch \
@@ -49,4 +55,4 @@ sudo docker run -d \
   -p 8000:8000 \
   -v ~/broker.db:/db/broker.db \
   -v ~/logs:/app/logs \
-  "aircok/aircok_edge:${version}"
+  "$target_image"
