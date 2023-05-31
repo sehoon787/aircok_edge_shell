@@ -13,9 +13,9 @@ shell_version=$(jq -r '.shell_version' "$version_file")
 
 # Define a list of Docker image names
 DOCKER_IMAGES=(
-  "aircok_edge_db${db_version}" 
-  "aircok_edge${server_version}" 
-  "aircok_edge_app${app_version}"
+  "aircok/aircok_edge_db:${db_version}" 
+  "aircok/aircok_edge:${server_version}" 
+  "aircok/aircok_edge_app:${app_version}"
 )
 
 # Iterate over each Docker image name
