@@ -15,10 +15,10 @@ else
   # Read the versions from the JSON file
   db_version=$(jq -r '.db_version' "$version_file")
   # Run Docker image
-  sudo docker run -itd "aircok/aircok_edge_db:${db_version}"
+  sudo docker run -itd aircok/aircok_edge_db:"${db_version}"
   # Copy the app bundle from the Docker container
-  container_id=$(sudo docker ps -aqf "ancestor=aircok/aircok_edge_db:${db_version}")
-  sudo docker cp "${container_id}:/broker.db" ~/
+  container_id=$(sudo docker ps -qf "ancestor=aircok/aircok_edge_db:${db_version}")
+  sudo docker cp "${container_id}":/broker.db ~/
   # Stop the Docker container
   sudo docker stop "${container_id}"
 
