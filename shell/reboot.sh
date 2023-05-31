@@ -47,9 +47,9 @@ done
 
 # Compare new shell version with current shell version 
 cd ~/
-sudo git clone https://github.com/aircok/aircok_edge_shell.git
+sudo git clone https://github.com/Gundue/aircok_edge_shell.git
 
-new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/version.json)
+new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
 
 if [[ "$shell_version" == "$new_shell_version" ]]; then
   sudo rm -rf ~/aircok_edge_shell
