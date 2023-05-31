@@ -13,9 +13,9 @@ shell_version=$(jq -r '.shell_version' "$version_file")
 
 # Define a list of Docker image names
 DOCKER_IMAGES=(
-  "aircok_edge_db${db_version}" 
-  "aircok_edge${server_version}" 
-  "aircok_edge_app${app_version}"
+  "aircok/aircok_edge_db:${db_version}" 
+  "aircok/aircok_edge:${server_version}" 
+  "aircok/aircok_edge_app:${app_version}"
 )
 
 # Iterate over each Docker image name
@@ -47,9 +47,9 @@ done
 
 # Compare new shell version with current shell version 
 cd ~/
-sudo git clone https://github.com/aircok/aircok_edge_shell.git
+sudo git clone https://github.com/Gundue/aircok_edge_shell.git
 
-new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/version.json)
+new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
 
 if [[ "$shell_version" == "$new_shell_version" ]]; then
   sudo rm -rf ~/aircok_edge_shell
