@@ -2,6 +2,8 @@
 
 set -e
 
+state="false"
+
 # Read the versions from the JSON file
 version_file=~/version.json
 db_version=$(jq -r '.db_version' "$version_file")
@@ -35,6 +37,7 @@ for image_name in "${DOCKER_IMAGES[@]}"; do
 
             sudo docker pull "${image_name}"
             echo "✅ Downloaded '${image_name}' successfully."
+            state="true"
         fi
     else
         echo "Docker image '${image_name}' does not exist on Docker Hub."
@@ -64,6 +67,6 @@ response=$(curl -X POST -H "Content-Type: application/json" -d "{\"server_versio
 if [[ "$response" != *"success"* ]]; then
   echo "⛔ Error: Request was not successful"
   exit 1
-else
+elif [ "$state" = "true" ]; then
   sudo reboot
 fi
