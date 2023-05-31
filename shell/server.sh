@@ -2,7 +2,7 @@
 
 set -e
 
-# Run command and filter eth0 line
+# Run ifconfig command and filter eth0 line
 mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
 # Versions JSON file path
@@ -15,10 +15,10 @@ else
   # Read the versions from the JSON file
   db_version=$(jq -r '.db_version' "$version_file")
   # Run Docker image
-  sudo docker run -itd --entrypoint=/bin/sh aircok/aircok_edge_db:"${db_version}"
+  sudo docker run -itd "aircok/aircok_edge_db:${db_version}"
   # Copy the app bundle from the Docker container
   container_id=$(sudo docker ps -qf "ancestor=aircok/aircok_edge_db:${db_version}")
-  sudo docker cp "${container_id}":/app/broker.db ~/
+  sudo docker cp "${container_id}":/broker.db ~/
   # Stop the Docker container
   sudo docker stop "${container_id}"
 
@@ -49,7 +49,7 @@ sudo docker volume inspect logs
 
 # Check version
 arch=$(dpkg --print-architecture)
-server_version=$(jq -r '.server_version' "$version_file")
+server_version=$(jq -r '.version' "$version_file")
 target_image="aircok/aircok_edge:${server_version}"
 
 # Check if the Docker image exists
