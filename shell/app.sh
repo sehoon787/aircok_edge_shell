@@ -6,7 +6,8 @@ set -e
 mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
 # Read the app version from the JSON file
-app_version=$(jq -r '.version' ~/bundle/data/flutter_assets/version.json)
+version_file=~/version.json
+app_version=$(jq -r '.app_version' "$version_file")
 target_image="aircok/aircok_edge_app:${app_version}"
 
 # Check if the Docker image exists
