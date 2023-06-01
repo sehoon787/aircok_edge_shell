@@ -40,5 +40,8 @@ flutter doctor
 # Add a cron job to request check update per 6 hours
 (crontab -l 2>/dev/null; echo "0 */6 * * * curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')") | crontab -
 
+# Get version.json from server
+curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
+
 # Execute reboot script
 bash ~/aircok_edge_shell/shell/reboot.sh
