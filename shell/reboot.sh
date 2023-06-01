@@ -21,7 +21,7 @@ DOCKER_IMAGES=(
 # Iterate over each Docker image name
 for image_name in "${DOCKER_IMAGES[@]}"; do
     # Check if the Docker image already exists locally
-    if sudo docker images | awk '{print $1":"$2}' | grep -q "${image_name}"; then
+    if ! sudo docker images | awk '{print $1":"$2}' | grep -q "${image_name}"; then
         echo "Docker image '${image_name}' is already present locally."
         # Check if the Docker image exists on Docker Hub
         if sudo docker pull "${image_name}" &> /dev/null; then
@@ -31,8 +31,7 @@ for image_name in "${DOCKER_IMAGES[@]}"; do
             state="true"
 
             # Remove previous version of the image if exists
-            prev=$(sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep "${image_name}")
-            if [[ -n "$prev" ]]; then
+            if ! sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "$image_name"; then
                 sudo docker rmi -f "$prev"
                 echo "Previous version '$prev' has been forcefully removed."
             fi
