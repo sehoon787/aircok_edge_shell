@@ -54,7 +54,7 @@ new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
 if [[ "$shell_version" == "$new_shell_version" ]]; then
   sudo rm -rf ~/aircok_edge_shell
 else
-  sudo rm -rf ~/shell
+  sudo rm -rf ~/aircok_edge_shell/shell
   sudo cp -R ~/aircok_edge_shell/shell ~/
   sudo rm -rf ~/aircok_edge_shell
   echo "✅ Update shell successfully."
