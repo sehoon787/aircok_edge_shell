@@ -26,7 +26,7 @@ sudo docker version
 sudo apt-get install -y vlc libmpv-dev mpv
 
 # Install Flutter to deal with 
-mkdir ~/development
+mkdir -p ~/development
 cd ~/development
 git clone https://github.com/flutter/flutter.git -b master 
 cd flutter
