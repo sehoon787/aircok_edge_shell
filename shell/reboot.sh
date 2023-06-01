@@ -44,17 +44,14 @@ for image_name in "${DOCKER_IMAGES[@]}"; do
 done
 
 # Compare new shell version with current shell version 
-cd ~/
-sudo git clone https://github.com/Gundue/aircok_edge_shell.git
+current_shell_version=$(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
 
-new_shell_version=$(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
-
-if [[ "$shell_version" == "$new_shell_version" ]]; then
+if [[ "$shell_version" == "$current_shell_version" ]]; then
   sudo rm -rf ~/aircok_edge_shell
 else
+  cd ~/
   sudo rm -rf ~/aircok_edge_shell/shell
-  sudo cp -R ~/aircok_edge_shell/shell ~/
-  sudo rm -rf ~/aircok_edge_shell
+  sudo git clone https://github.com/aircok/aircok_edge_shell.git
   echo "✅ Update shell successfully."
 fi
 
