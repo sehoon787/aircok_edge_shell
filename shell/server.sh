@@ -60,7 +60,7 @@ if ! sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "$target_i
   if [[ "$response" != *"success"* ]]; then
       echo "⛔ Error: Request was not successful"
   else
-        echo "✅ Downloaded '${target_image}' successfully."
+      echo "✅ Downloaded '${target_image}' successfully."
   fi
 fi
 
