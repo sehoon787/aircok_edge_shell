@@ -41,4 +41,4 @@ flutter doctor
 (crontab -l 2>/dev/null; echo "0 */6 * * * curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')") | crontab -
 
 # Execute reboot script
-bash ~/shell/reboot.sh
+bash ~/aircok_edge_shell/shell/reboot.sh
