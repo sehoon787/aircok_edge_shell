@@ -25,6 +25,16 @@ sudo docker version
 # Install packages for Flutter HW acceleration
 sudo apt-get install -y vlc libmpv-dev mpv
 
+# Install Flutter to deal with 
+mkdir ~/development
+cd ~/development
+git clone https://github.com/flutter/flutter.git -b master 
+cd flutter
+git checkout 3.10.0-5.0.pre
+sudo echo 'export PATH="$PATH:/home/aircok/development/flutter/bin"' | sudo tee -a /etc/profile
+source /etc/profile
+flutter doctor
+
 # Add a cron job to run the script at system reboot
 (crontab -l 2>/dev/null; echo "@reboot /bin/bash ~/shell/start.sh") | crontab -
 # Add a cron job to request check update per 6 hours

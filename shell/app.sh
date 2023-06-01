@@ -13,6 +13,8 @@ shell_version=$(jq -r '.shell_version' "$version_file")
 mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
 # Read the app version from the JSON file
+version_file=~/version.json
+app_version=$(jq -r '.app_version' "$version_file")
 target_image="aircok/aircok_edge_app:${app_version}"
 
 # Check if the Docker image exists
