@@ -48,7 +48,7 @@ current_shell_version=$(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
 
 if [[ "$shell_version" != "$current_shell_version" ]]; then
   cd ~/
-  sudo rm -rf ~/aircok_edge_shell/shell
+  sudo rm -rf ~/aircok_edge_shell
   sudo git clone https://github.com/aircok/aircok_edge_shell.git
   echo "✅ Update shell successfully."
 fi
