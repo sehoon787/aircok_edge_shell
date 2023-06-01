@@ -63,7 +63,7 @@ fi
 # Run ifconfig command and filter eth0 line
 mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
-response=$(curl -X POST -H "Content-Type: application/json" -d "{\"server_version\": \"$server_version\", \"app_version\": \"$app_version\", \"db\": \"$db_version\", \"shell\": \"$shell_version\"}" https://v3.aircok.com/web/edge/update?sn=$mac_address)
+response=$(curl -X POST -H "Content-Type: application/json" -d "{\"server_version\": \"$server_version\", \"app_version\": \"$app_version\", \"db_version\": \"$db_version\", \"shell_version\": \"$shell_version\"}" https://v3.aircok.com/web/edge/update?sn=$mac_address)
 if [[ "$response" != *"success"* ]]; then
   echo "⛔ Error: Request was not successful"
   exit 1
