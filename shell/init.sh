@@ -29,7 +29,7 @@ if [ -f /home/aircok/broker.db ]; then
     sudo rm -rf /home/aircok/broker.db 
 fi
 # INIT crontab
-sudo crontab -r
+crontab -r
 ########################################################################
 
 # Update system packages
