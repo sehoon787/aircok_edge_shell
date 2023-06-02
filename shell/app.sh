@@ -43,4 +43,6 @@ if ! [[ -d /home/aircok/bundle && -f /home/aircok/bundle/data/flutter_assets/ver
 fi
 
 # Run the app
-#/home/aircok/bundle/aircok_edge
+#1. gnome-session-properties 
+#2. command에 아래 실행파일 경로 등록
+#=> /home/aircok/bundle/aircok_edge
