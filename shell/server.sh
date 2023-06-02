@@ -6,11 +6,11 @@ set -e
 mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
 # Versions JSON file path
-version_file=~/version.json
+version_file=/home/aircok/version.json
 
 # Check broker.db
-if [ -f "~/broker.db" ]; then
-  sudo sqlite3 ~/broker.db "SELECT * FROM dvc_info;"
+if [ -f /home/aircok/broker.db ]; then
+  sudo sqlite3 /home/aircok/broker.db "SELECT * FROM dvc_info;"
 else
   # Read the versions from the JSON file
   db_version=$(jq -r '.db_version' "$version_file")
@@ -18,7 +18,7 @@ else
   sudo docker run -itd --entrypoint=/bin/sh aircok/aircok_edge_db:"${db_version}"
   # Copy the app bundle from the Docker container
   container_id=$(sudo docker ps -qf "ancestor=aircok/aircok_edge_db:${db_version}")
-  sudo docker cp "${container_id}":/app/broker.db ~/
+  sudo docker cp "${container_id}":/app/broker.db /home/aircok/
   # Stop the Docker container
   sudo docker stop "${container_id}"
 
@@ -65,10 +65,14 @@ if ! sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "$target_i
 fi
 
 # Docker run
+sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
 sudo docker run -d \
   --platform=linux/$arch \
   --network=edgenet --ip=192.168.10.1 \
   -p 8000:8000 \
-  -v ~/broker.db:/db/broker.db \
-  -v ~/logs:/app/logs \
+  -v /home/aircok/broker.db:/db/broker.db \
+  -v /home/aircok/logs:/app/logs \
+  -v /etc/localtime:/etc/localtime:ro \
+  -e TZ=Asia/Seoul \
   "$target_image"

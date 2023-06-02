@@ -35,13 +35,14 @@ sudo echo 'export PATH="$PATH:/home/aircok/development/flutter/bin"' | sudo tee 
 source /etc/profile
 flutter doctor
 
-# Add a cron job to run the script at system reboot
-(crontab -l 2>/dev/null; echo "@reboot /bin/bash ~/aircok_edge_shell/shell/start.sh") | crontab -
 # Add a cron job to request check update per 6 hours
 (crontab -l 2>/dev/null; echo "0 */6 * * * curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')") | crontab -
 
 # Get version.json from server
 curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
+
+# Register start shell
+sudo sh -c 'echo -e "#!/bin/bash\n\n/home/aircok/aircok_edge_shell/shell/start.sh\n\nexit 0" >> /etc/rc.local'
 
 # Execute reboot script
 bash ~/aircok_edge_shell/shell/reboot.sh

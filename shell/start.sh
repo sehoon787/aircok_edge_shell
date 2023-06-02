@@ -1,4 +1,6 @@
-bash ~/aircok_edge_shell/shell/server.sh
-bash ~/aircok_edge_shell/shell/app.sh
+#!/bin/bash
 
-exit 0
+set -e
+
+bash /home/aircok/aircok_edge_shell/shell/server.sh
+bash /home/aircok/aircok_edge_shell/shell/app.sh
