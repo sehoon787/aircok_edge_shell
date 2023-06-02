@@ -42,7 +42,5 @@ if [[ -d /home/aircok/bundle && -f /home/aircok/bundle/version.json ]] || [[ $ap
     fi
 fi
 
-# Change directory to the app bundle
-cd /home/aircok/bundle
 # Run the app
-./aircok_edge &
+cd /home/aircok/bundle/aircok_edge
