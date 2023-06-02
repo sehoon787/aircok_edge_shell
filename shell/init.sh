@@ -15,11 +15,19 @@ fi
 sudo docker rmi $(sudo docker images -a -q) 2>/dev/null
 sudo docker system prune -a -f
 # INIT Flutter
-if [ -d /home/aircok/development ]; then sudo rm -rf /home/aircok/development fi
-if [ -d /home/aircok/bundle ]; then sudo rm -rf /home/aircok/bundle fi
+if [ -d /home/aircok/development ]; then 
+    sudo rm -rf /home/aircok/development
+fi
+if [ -d /home/aircok/bundle ]; then 
+    sudo rm -rf /home/aircok/bundle
+fi
 # INIT FastAPI vloumes
-if [ -d /home/aircok/logs ]; then sudo rm -rf /home/aircok/logs fi
-if [ -f /home/aircok/broker.db ]; then sudo rm -rf /home/aircok/broker.db fi
+if [ -d /home/aircok/logs ]; then 
+    sudo rm -rf /home/aircok/logs 
+fi
+if [ -f /home/aircok/broker.db ]; then 
+    sudo rm -rf /home/aircok/broker.db 
+fi
 # INIT crontab
 sudo crontab -r
 ########################################################################
