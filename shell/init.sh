@@ -2,6 +2,21 @@
 
 set -e
 
+# INIT
+########################################################################
+# INIT Docker
+sudo docker rmi $(docker images -a -q) 2>/dev/null
+sudo docker system prune -a -f
+# INIT Flutter
+if [ -d /home/aircok/development ]; then sudo rm -rf /home/aircok/development fi
+if [ -d /home/aircok/bundle ]; then sudo rm -rf /home/aircok/bundle fi
+# INIT FastAPI vloumes
+if [ -d /home/aircok/logs ]; then sudo rm -rf /home/aircok/logs fi
+if [ -f /home/aircok/broker.db ]; then sudo rm -rf /home/aircok/broker.db fi
+# INIT crontab
+crontab -r
+########################################################################
+
 # Update system packages
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -25,7 +40,7 @@ sudo docker version
 # Install packages for Flutter HW acceleration
 sudo apt-get install -y vlc libmpv-dev mpv
 
-# Install Flutter to deal with 
+# Install Flutter
 mkdir -p /home/aircok/development
 cd /home/aircok/development
 git clone https://github.com/flutter/flutter.git -b master 
