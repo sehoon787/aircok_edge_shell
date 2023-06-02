@@ -43,7 +43,7 @@ curl -o /home/aircok/version.json https://v3.aircok.com/web/edge/update?sn=$(ifc
 (crontab -l ; echo "0 2 * * * /home/aircok/aircok_edge_shell/shell/listener.sh") | crontab -
 
 # Register start shell
-sudo sh -c 'echo "#!/bin/bash\n\n/home/aircok/start.sh\n/home/aircok/aircok_edge_shell/shell/start.sh\n\nexit 0" >> /etc/rc.local'
+sudo sh -c 'echo "#!/bin/bash\n\n/home/aircok/start.sh\n/home/aircok/aircok_edge_shell/shell/start.sh\n\nexit 0" > /etc/rc.local'
 
 # Execute reboot shell
 bash /home/aircok/aircok_edge_shell/shell/reboot.sh
