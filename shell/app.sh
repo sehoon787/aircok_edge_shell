@@ -40,6 +40,8 @@ if ! [[ -d /home/aircok/bundle && -f /home/aircok/bundle/data/flutter_assets/ver
     else
         echo "✅ Successfully copied app bundle from '$target_image'"
     fi
+    
+    sudo reboot
 fi
 
 # Run the app
