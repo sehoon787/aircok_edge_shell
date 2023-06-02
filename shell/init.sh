@@ -42,7 +42,7 @@ flutter doctor
 curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
 # Register start shell
-sudo sh -c 'echo "#!/bin/bash\n\n/home/aircok/start.sh\n/home/aircok/aircok_edge_shell/shell/start.sh\n\nexit 0" >> /etc/rc.local'
+sudo sh -c 'echo "#!/bin/bash\n\n/home/aircok/start.sh\n/home/aircok/aircok_edge_shell/shell/server.sh\n\nexit 0" >> /etc/rc.local'
 
 # Execute reboot script
 bash ~/aircok_edge_shell/shell/reboot.sh
