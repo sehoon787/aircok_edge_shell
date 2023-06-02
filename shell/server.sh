@@ -75,12 +75,12 @@ fi
 # Docker run
 sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-sudo docker run -d \
-  --platform=linux/$arch \
-  --network=edgenet --ip=192.168.10.1 \
-  -p 8000:8000 \
-  -v /home/aircok/broker.db:/db/broker.db \
-  -v /home/aircok/logs:/app/logs \
-  -v /etc/localtime:/etc/localtime:ro \
-  -e TZ=Asia/Seoul \
-  "$target_image"
+sudo docker run -rm -d \
+--platform=linux/$arch \
+--network=edgenet --ip=192.168.10.1 \
+-p 8000:8000 \
+-v /home/aircok/broker.db:/db/broker.db \
+-v /home/aircok/logs:/app/logs \
+-v /etc/localtime:/etc/localtime:ro \
+-e TZ=Asia/Seoul \
+"$target_image"
