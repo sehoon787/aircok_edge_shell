@@ -5,6 +5,13 @@ set -e
 # INIT
 ########################################################################
 # INIT Docker
+# Get IDs of all running containers
+container_ids=$(sudo docker ps -q)
+if ! [ -z "$container_ids" ]; then
+    # Stop all running containers
+    sudo docker stop $container_ids
+    echo "Stopped all running Docker containers"
+fi
 sudo docker rmi $(sudo docker images -a -q) 2>/dev/null
 sudo docker system prune -a -f
 # INIT Flutter
