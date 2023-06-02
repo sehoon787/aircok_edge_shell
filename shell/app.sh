@@ -24,7 +24,7 @@ if ! sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "$target_i
 fi
 
 # Check if the Docker image exists locally
-if [[ -d /home/aircok/bundle && -f /home/aircok/bundle/version.json ]] || [[ $app_version != $(jq -r '.version' /home/aircok/bundle/version.json) ]]; then
+if ! [[ -d /home/aircok/bundle && -f /home/aircok/bundle/data/flutter_assets/version.json ]] || [[ $app_version != $(jq -r '.version' /home/aircok/bundle/data/flutter_assets/version.json) ]]; then
     # Run Docker image
     sudo docker run -itd "$target_image"
     # Copy the app bundle from the Docker container
@@ -43,4 +43,4 @@ if [[ -d /home/aircok/bundle && -f /home/aircok/bundle/version.json ]] || [[ $ap
 fi
 
 # Run the app
-cd /home/aircok/bundle/aircok_edge
+#/home/aircok/bundle/aircok_edge
