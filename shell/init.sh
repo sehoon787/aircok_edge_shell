@@ -26,8 +26,8 @@ sudo docker version
 sudo apt-get install -y vlc libmpv-dev mpv
 
 # Install Flutter to deal with 
-mkdir -p ~/development
-cd ~/development
+mkdir -p /home/aircok/development
+cd /home/aircok/development
 git clone https://github.com/flutter/flutter.git -b master 
 cd flutter
 git checkout 3.10.0-5.0.pre
@@ -35,14 +35,18 @@ sudo echo 'export PATH="$PATH:/home/aircok/development/flutter/bin"' | sudo tee 
 source /etc/profile
 flutter doctor
 
-# Add a cron job to request check update per 6 hours
-(crontab -l 2>/dev/null; echo "0 */6 * * * curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')") | crontab -
-
 # Get version.json from server
-curl -o ~/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
+curl -o /home/aircok/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
+
+# Add a cron job to request check update per 6 hours
+(crontab -l 2>/dev/null; echo "0 */6 * * * curl -o /home/aircok/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')") | crontab -
+(crontab -l ; echo "0 2 * * * /home/aircok/aircok_edge_shell/shell/listener.sh") | crontab -
 
 # Register start shell
 sudo sh -c 'echo "#!/bin/bash\n\n/home/aircok/start.sh\n/home/aircok/aircok_edge_shell/shell/start.sh\n\nexit 0" >> /etc/rc.local'
+
+# IP tunneling
+sudo iptables -t nat -A PREROUTING -d 192.168.100.1 -j DNAT --to-destination 192.168.10.1
 
 # Execute reboot script
 bash ~/aircok_edge_shell/shell/reboot.sh

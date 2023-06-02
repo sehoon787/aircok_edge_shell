@@ -5,7 +5,7 @@ set -e
 state="false"
 
 # Read the versions from the JSON file
-version_file=~/version.json
+version_file=/home/aircok/version.json
 db_version=$(jq -r '.db_version' "$version_file")
 server_version=$(jq -r '.server_version' "$version_file")
 app_version=$(jq -r '.app_version' "$version_file")
@@ -43,11 +43,10 @@ for image_name in "${DOCKER_IMAGES[@]}"; do
 done
 
 # Compare new shell version with current shell version 
-current_shell_version=$(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
+current_shell_version=$(jq -r '.version' /home/aircok/aircok_edge_shell/shell/version.json)
 
 if [[ "$shell_version" != "$current_shell_version" ]]; then
-  cd ~/
-  sudo rm -rf ~/aircok_edge_shell
+  sudo rm -rf /home/aircok/aircok_edge_shell
   sudo git clone https://github.com/aircok/aircok_edge_shell.git
   echo "✅ Update shell successfully."
 fi
