@@ -49,4 +49,4 @@ sudo sh -c 'echo "#!/bin/bash\n\n/home/aircok/start.sh\n/home/aircok/aircok_edge
 sudo iptables -t nat -A PREROUTING -d 192.168.100.1 -j DNAT --to-destination 192.168.10.1
 
 # Execute reboot script
-bash ~/aircok_edge_shell/shell/reboot.sh
+bash /home/aircok/aircok_edge_shell/shell/reboot.sh

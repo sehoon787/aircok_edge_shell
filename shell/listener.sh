@@ -2,7 +2,7 @@
 
 set -e
 
-version_file=~/version.json
+version_file=/home/aircok/version.json
 
 # Read the versions from the JSON file
 versions=(
@@ -15,7 +15,7 @@ image_names=(
     "aircok/aircok_edge_db"
     "aircok/aircok_edge"
     "aircok/aircok_edge_app"
-    $(jq -r '.version' ~/aircok_edge_shell/shell/version.json)
+    $(jq -r '.version' /home/aircok/aircok_edge_shell/shell/version.json)
 )
 
 for i in "${versions[@]}"; do
