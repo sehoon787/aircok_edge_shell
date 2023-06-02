@@ -54,6 +54,9 @@ fi
 # Run ifconfig command and filter eth0 line
 mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
+# Set app shell
+bash /home/aircok/aircok_edge_shell/shell/app.sh
+
 response=$(curl -X POST -H "Content-Type: application/json" -d "{\"server_version\": \"$server_version\", \"app_version\": \"$app_version\", \"db_version\": \"$db_version\", \"shell_version\": \"$shell_version\"}" https://v3.aircok.com/web/edge/update?sn=$mac_address)
 if [[ "$response" != *"success"* ]]; then
   echo "⛔ Error: Request was not successful"

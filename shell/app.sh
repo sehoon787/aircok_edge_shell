@@ -2,13 +2,6 @@
 
 set -e
 
-# Read the versions from the JSON file
-version_file=/home/aircok/version.json
-db_version=$(jq -r '.db_version' "$version_file")
-server_version=$(jq -r '.server_version' "$version_file")
-app_version=$(jq -r '.app_version' "$version_file")
-shell_version=$(jq -r '.shell_version' "$version_file")
-
 # Run ifconfig command and filter eth0 line
 mac_address=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
@@ -40,8 +33,6 @@ if ! [[ -d /home/aircok/bundle && -f /home/aircok/bundle/data/flutter_assets/ver
     else
         echo "✅ Successfully copied app bundle from '$target_image'"
     fi
-    
-    sudo reboot
 fi
 
 # Run the app
