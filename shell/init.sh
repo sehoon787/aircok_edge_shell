@@ -5,7 +5,7 @@ set -e
 # INIT
 ########################################################################
 # INIT Docker
-sudo docker rmi $(docker images -a -q) 2>/dev/null
+sudo docker rmi $(sudo docker images -a -q) 2>/dev/null
 sudo docker system prune -a -f
 # INIT Flutter
 if [ -d /home/aircok/development ]; then sudo rm -rf /home/aircok/development fi
