@@ -36,7 +36,15 @@ if ! sudo docker network ls | grep edgenet; then
   sudo docker network create --subnet=192.168.10.0/24 --gateway=192.168.10.2 edgenet
   echo "✅ Created 'edgenet' successfully"
 fi
-ifconfig
+
+# IP tunneling
+if ifconfig | grep -qE '192\.168\.10\.1|192\.168\.100\.1'; then 
+  sudo iptables -t nat -A PREROUTING -d 192.168.100.1 -j DNAT --to-destination 192.168.10.1
+  echo "✅ IP tunneling done"
+else
+  echo "⛔ IP addresses do not exist"; 
+  ifconfig
+fi
 
 # Check Docker logs volume
 if ! sudo docker volume ls | grep logs; then
