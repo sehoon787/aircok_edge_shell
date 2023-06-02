@@ -4,32 +4,20 @@ set -e
 
 # INIT
 ########################################################################
-# INIT Docker
-# Get IDs of all running containers
+# Stop all running containers
 container_ids=$(sudo docker ps -q)
-if ! [ -z "$container_ids" ]; then
-    # Stop all running containers
+if [ -n "$container_ids" ]; then
     sudo docker stop $container_ids
     echo "Stopped all running Docker containers"
 fi
-sudo docker rmi $(sudo docker images -a -q) 2>/dev/null
+# Clean up Docker system
 sudo docker system prune -a -f
-# INIT Flutter
-if [ -d /home/aircok/development ]; then 
-    sudo rm -rf /home/aircok/development
-fi
-if [ -d /home/aircok/bundle ]; then 
-    sudo rm -rf /home/aircok/bundle
-fi
-# INIT FastAPI vloumes
-if [ -d /home/aircok/logs ]; then 
-    sudo rm -rf /home/aircok/logs 
-fi
-if [ -f /home/aircok/broker.db ]; then 
-    sudo rm -rf /home/aircok/broker.db 
-fi
-# INIT crontab
-crontab -r
+# Initialize Flutter
+sudo rm -rf "/home/aircok/development"
+sudo rm -rf "/home/aircok/bundle"
+# Initialize FastAPI volumes
+sudo rm -rf "/home/aircok/logs" 
+sudo rm -f "/home/aircok/broker.db" 
 ########################################################################
 
 # Update system packages
