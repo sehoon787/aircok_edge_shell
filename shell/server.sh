@@ -75,7 +75,7 @@ fi
 # Docker run
 sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-sudo docker run -rm -d \
+sudo docker run --rm -d \
 --platform=linux/$arch \
 --network=edgenet --ip=192.168.10.1 \
 -p 8000:8000 \
