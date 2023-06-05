@@ -4,6 +4,11 @@ set -e
 
 # INIT
 ########################################################################
+# Check broker.db
+if ! [ -d /home/aircok/aircok_edge_shell/shell ]; then
+    cd /home/aircok
+    sudo git clone https://github.com/aircok/aircok_edge_shell.git
+fi
 sudo chmod 755 /home/aircok/aircok_edge_shell/shell/*
 
 if command -v docker &> /dev/null; then
