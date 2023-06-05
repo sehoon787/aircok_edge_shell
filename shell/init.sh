@@ -6,14 +6,17 @@ set -e
 ########################################################################
 sudo chmod 755 /home/aircok/aircok_edge_shell/shell/*
 
-# Stop all running containers
-container_ids=$(sudo docker ps -q)
-if [ -n "$container_ids" ]; then
-    sudo docker stop $container_ids
-    echo "Stopped all running Docker containers"
+if command -v docker &> /dev/null; then
+    echo "Docker command exists"
+    # Stop all running containers
+    container_ids=$(sudo docker ps -q)
+    if [ -n "$container_ids" ]; then
+        sudo docker stop $container_ids
+        echo "Stopped all running Docker containers"
+    fi
+    # Clean up Docker system
+    sudo docker system prune -a -f
 fi
-# Clean up Docker system
-sudo docker system prune -a -f
 # Initialize Flutter
 sudo rm -rf "/home/aircok/development"
 sudo rm -rf "/home/aircok/bundle"
