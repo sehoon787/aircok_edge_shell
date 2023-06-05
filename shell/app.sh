@@ -19,7 +19,7 @@ fi
 # Check if the Docker image exists locally
 if ! [[ -d /home/aircok/bundle && -f /home/aircok/bundle/data/flutter_assets/version.json ]] || [[ $app_version != $(jq -r '.version' /home/aircok/bundle/data/flutter_assets/version.json) ]]; then
     # Run Docker image
-    sudo docker run -itd "$target_image"
+    sudo docker run -itd --rm "$target_image"
     # Copy the app bundle from the Docker container
     container_id=$(sudo docker ps -qf "ancestor=$target_image")
 	sudo docker cp "${container_id}":/app/AircokEdge/build/linux/arm64/release/bundle /home/aircok/

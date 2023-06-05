@@ -5,6 +5,7 @@ set -e
 # INIT
 ########################################################################
 sudo chmod 755 /home/aircok/aircok_edge_shell/shell/*
+
 # Stop all running containers
 container_ids=$(sudo docker ps -q)
 if [ -n "$container_ids" ]; then
