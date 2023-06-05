@@ -29,8 +29,12 @@ sudo rm -rf "/home/aircok/bundle"
 sudo rm -rf "/home/aircok/logs" 
 sudo rm -f "/home/aircok/broker.db" 
 # Initialize crontab
-sudo crontab -r
-sudo crontab -u aircok -r
+if ! sudo crontab -l &> /dev/null; then
+    sudo crontab -r
+fi
+if ! sudo crontab -u aircok -l &> /dev/null; then
+    sudo crontab -u aircok -r
+fi
 ########################################################################
 
 # Update system packages
