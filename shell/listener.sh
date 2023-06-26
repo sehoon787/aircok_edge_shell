@@ -34,6 +34,7 @@ for i in "${!versions[@]}"; do
     if [[ "$version" != "$image_tag" ]]; then
         state="true"
         break
+    fi
 done
 
 # Execute reboot shell
