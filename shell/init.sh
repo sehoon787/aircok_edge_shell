@@ -74,8 +74,8 @@ flutter doctor
 curl -o /home/aircok/version.json https://v3.aircok.com/web/edge/update?sn=$(ifconfig eth0 | awk '/ether/ {gsub(/:/,"",$2); print $2}')
 
 # Add a cron job to request check update per 6 hours
-(crontab -l 2>/dev/null; echo "0 */6 * * * sudo curl -o /home/aircok/version.json https://v3.aircok.com/web/edge/update?sn=\$(ifconfig eth0 | awk '/ether/ {gsub(/:/,\"\",$2); print \$2}')") | sudo crontab -
-(crontab -l 2>/dev/null; echo "0 2 * * * bash /home/aircok/aircok_edge_shell/shell/listener.sh") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "0 */6 * * * sudo curl -o /home/aircok/version.json https://v3.aircok.com/web/edge/update?sn=\$(ifconfig eth0 | awk '/ether/ {gsub(/:/,\"\",$2); print \$2}')") | sudo crontab -
+(sudo crontab -l 2>/dev/null; echo "0 2 * * * bash /home/aircok/aircok_edge_shell/shell/listener.sh") | sudo crontab -
 
 # Register start shell
 sudo sh -c 'echo "#!/bin/bash\n\n/home/aircok/start.sh\n/home/aircok/aircok_edge_shell/shell/server.sh\n\nexit 0" > /etc/rc.local'
